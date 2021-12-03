@@ -1443,7 +1443,7 @@ PrefabInstance:
       objectReference: {fileID: 263496946}
     - target: {fileID: 8902362295163819074, guid: c6ef4b652c09b2d469b118237fb33295, type: 3}
       propertyPath: customerInterval
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8902362295163819074, guid: c6ef4b652c09b2d469b118237fb33295, type: 3}
       propertyPath: customerOrderTime
@@ -1455,7 +1455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8902362295163819074, guid: c6ef4b652c09b2d469b118237fb33295, type: 3}
       propertyPath: intervalMultiplier
-      value: 1
+      value: 1.153
       objectReference: {fileID: 0}
     - target: {fileID: 8902362295163819074, guid: c6ef4b652c09b2d469b118237fb33295, type: 3}
       propertyPath: orderTimeMultiplier

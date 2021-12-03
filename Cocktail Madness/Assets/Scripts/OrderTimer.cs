@@ -8,7 +8,7 @@ public class OrderTimer : MonoBehaviour
     [SerializeField] List<Sprite> orderBubbleStates = new List<Sprite>();
     [SerializeField] MonsterRenderer monsterRenderer;
     [SerializeField] Image orderBubble;
-
+    [SerializeField] Animator animator;
     private bool isStarted = false;
     private float orderTime;
     private float startTime;
@@ -50,8 +50,14 @@ public class OrderTimer : MonoBehaviour
         {
             UpdateOrderSprites(2);
             customerState = CustomerState.angry;
+            PlayHurryAnimation();
         }
 
+    }
+
+    private void PlayHurryAnimation()
+    {
+        animator.SetBool("isLate", true);
     }
     // Set the sprites of monsters and order bubbles
     // Monsters are offset by one because their base sprite is also in their array

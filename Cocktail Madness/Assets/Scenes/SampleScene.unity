@@ -724,9 +724,9 @@ MonoBehaviour:
   orderFeedbackText: {fileID: 2052993450}
   lives: {fileID: 125137920}
   levelTimer: {fileID: 328482189}
-  Lives: {fileID: 0}
   Served: {fileID: 206955642}
-  GameOver: {fileID: 1590037931}
+  PerfectServed: {fileID: 0}
+  gameOver: {fileID: 0}
 --- !u!114 &132120564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,12 +914,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerSpeed: 15
-  customers: []
   orderManager: {fileID: 920898934}
   customerPrefab: {fileID: 2090326446708278291, guid: fcb762043a15a3e4eb22311507d9a8ed, type: 3}
   initialSpawn: {fileID: 1107281404}
-  location_01: {fileID: 509158724}
-  location_02: {fileID: 1952013863}
+  servingLocations: []
 --- !u!4 &263496947
 Transform:
   m_ObjectHideFlags: 0
@@ -980,11 +978,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9929b1da3689f246a5671c90d57df3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  servingGoal: 10
   totalTime: 60
   customerOrderTime: 15
   customerOrderVariance: 2
   customerInterval: 2
+  orderTimeMultiplier: 0
+  intervalMultiplier: 0
+  difficultyInterval: 0
   isTutorial: 0
   uiManager: {fileID: 132120563}
   customerManager: {fileID: 263496946}
@@ -2515,7 +2515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df592727d1b293a49ab7cb910eb38ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tracker: {fileID: 0}
   shaker: {fileID: 527851967}
+  orderManager: {fileID: 0}
 --- !u!4 &786270579
 Transform:
   m_ObjectHideFlags: 0
@@ -2582,6 +2584,8 @@ MonoBehaviour:
   customerManager: {fileID: 263496946}
   uiManager: {fileID: 132120563}
   shaker: {fileID: 527851967}
+  correctOrderSound: {fileID: 0}
+  incorrectOrderSound: {fileID: 0}
 --- !u!114 &920898935
 MonoBehaviour:
   m_ObjectHideFlags: 0
