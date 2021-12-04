@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LevelManager : MonoBehaviour
 {
@@ -21,9 +22,10 @@ public class LevelManager : MonoBehaviour
 
     public float difficultyInterval;
     public bool isTutorial;
-    
 
-    
+
+    public event Action<bool> finishTutorial;
+    private bool isFinished = false;
 
 
     [Header("Needed components")]
@@ -70,7 +72,13 @@ public class LevelManager : MonoBehaviour
 
         if(isTutorial && PlayerStats.correctServings + PlayerStats.perfectServings >= 1)
         {
-            LoadNextLevel();
+            if (!isFinished)
+            {
+                isFinished = true;
+                finishTutorial(false);
+            }
+            
+            //LoadNextLevel();
         }
 
         

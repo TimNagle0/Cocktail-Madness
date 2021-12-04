@@ -10,7 +10,6 @@ public class RecipeList : MonoBehaviour
     {
         recipeList = GetComponentsInChildren<Recipe>();
         
-        
     }
 
 

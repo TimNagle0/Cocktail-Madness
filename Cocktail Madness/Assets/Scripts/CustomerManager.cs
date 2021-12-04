@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CustomerManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class CustomerManager : MonoBehaviour
 
     private float orderTime;
     private float orderVariance;
+
+    public event Action missedOrder;
     
     // A class for storing the orderlocations and keeping track of customers / free spots
     public class OrderLocation
@@ -120,11 +123,12 @@ public class CustomerManager : MonoBehaviour
         CustomerBehaviour cb = newCustomer.GetComponent<CustomerBehaviour>();
         cb.CustomerSetup(orderLoc.orderObject,orderTime,orderVariance);
         cb.MoveCustomer(targetLocation, customerSpeed);
-        cb.OnMissedOrder += FailedOrder;
+        cb.OnMissedOrder += MissedOrder;
     }
 
-    public void FailedOrder(GameObject customer)
+    public void MissedOrder(GameObject customer)
     {
+        missedOrder();
         orderManager.FailCustomer(customer);
     }
 

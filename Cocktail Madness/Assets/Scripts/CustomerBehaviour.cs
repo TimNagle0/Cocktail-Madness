@@ -75,7 +75,7 @@ public class CustomerBehaviour : MonoBehaviour
     //Gets a random recipe from the list and displays the icon in the order bubble
     private void GetRecipe()
     {
-        order = RecipeList.recipeList[UnityEngine.Random.Range(0, 2)];
+        order = RecipeList.recipeList[UnityEngine.Random.Range(0, 3)];
         orderRenderer.sprite = order.orderSprite;
         orderRenderer.SetNativeSize();
         orderRenderer.transform.localScale *= 1.3f;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class OrderManager : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class OrderManager : MonoBehaviour
 
     [SerializeField] private AudioClip correctOrderSound;
     [SerializeField] private AudioClip incorrectOrderSound;
+
+    public event Action incorrectOrder;
+    public event Action perfectOrder;
+    public event Action correctOrder;
+    public event Action<float> shakeTime;
 
     private void Start()
     {
@@ -33,7 +39,7 @@ public class OrderManager : MonoBehaviour
     private void CompareOrders()
     {
         Recipe preparedOrder = shaker.CreateOrder();
-
+        shakeTime(preparedOrder.shakeTime);
         foreach(CustomerManager.OrderLocation orderLocation in customerManager.orderLocations)
         {
             if(orderLocation.currentCustomer == null)
@@ -109,6 +115,7 @@ public class OrderManager : MonoBehaviour
         
         PlayerStats.lives --;
         PlayerStats.incorrectServings++;
+        incorrectOrder();
         if (PlayerStats.lives == 0)
         {
             uiManager.TakeDamage();
@@ -138,11 +145,13 @@ public class OrderManager : MonoBehaviour
         if (isPerfect)
         {
             PlayerStats.perfectServings++;
+            perfectOrder();
             uiManager.UpdatePerfectServed(PlayerStats.perfectServings);
         }
         else
         {
             PlayerStats.correctServings++;
+            correctOrder();
             uiManager.UpdateServed(PlayerStats.correctServings);
         }
     }

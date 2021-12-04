@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | unity_project</title>
+</head>
+<body style="text-align: center">
+<canvas id="unity-canvas" width=960 height=540 style="width: 960px; height: 540px; background: #231F20"></canvas>
+
+
+<script src="Cocktail_Madness/Cocktail_Madness.loader.js"></script>
+<script>
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+    }
+
+    var gameInstance = null;
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Cocktail_Madness/Cocktail_Madness.data.gz",
+        frameworkUrl: "Cocktail_Madness/Cocktail_Madness.framework.js.gz",
+        codeUrl: "Cocktail_Madness/Cocktail_Madness.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "unity_project",
+        productVersion: "0.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+    }).then((instance) => {gameInstance = instance });
+    // Note that builds compressed with Brotli require HTTPS. This example uses gzip.
+</script>
+
+<script type="text/javascript">
+    // This will only work if the game is fully loaded, so I've put it on a 5 second timer.
+    // You can check whether gameInstance is null to determine if it is loaded.
+    setTimeout(function() {
+        if (gameInstance == null)
+            return;
+        gameInstance.SendMessage('Canvas', 'SetParticipantID',"hello")
+        
+    }, 5000);
+</script>
+<script src = 'https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js'></script>
+<script src = 'https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js'></script>
+
+<script >
+const firebaseConfig = {
+  apiKey: "AIzaSyClLkLYcoDL4ffQ6HDXMn-4XtyRhIww28A",
+  authDomain: "biomarker-cocktailshaker.firebaseapp.com",
+  databaseURL: "https://biomarker-cocktailshaker-default-rtdb.europe-west1.firebasedatabase.app/",
+  projectId: "biomarker-cocktailshaker",
+  storageBucket: "biomarker-cocktailshaker.appspot.com",
+  messagingSenderId: "1036069539819",
+  appId: "1:1036069539819:web:e1580d5f4e27eb0782d3ae",
+  measurementId: "G-G85SGYZ28Z"
+};
+
+firebase.initializeApp(firebaseConfig);
+</script>
+
+
+</body>
+</html>

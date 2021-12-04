@@ -7,6 +7,7 @@ public class IngredientList : MonoBehaviour
     static public List<GameObject> ingredients = new List<GameObject>();
 
     public event Action<GameObject> useIngredient;
+    public event Action<GameObject> deselectIngredient;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class IngredientList : MonoBehaviour
     }
     private void DeselectIngredient(GameObject ingredient)
     {
-        //Debug.Log("deselected ingredient : " + ingredient.name);
+        deselectIngredient(ingredient);
     }
 
     private void SelectIngredient(GameObject ingredient)

@@ -30,7 +30,7 @@ public class GameOverScreen : MonoBehaviour
         perfectServings.text = perfect.ToString();
         correctServings.text = correct.ToString();
         incorrectServings.text = incorrect.ToString();
-        totalScore.text = ((perfect * 2 + correct)*100).ToString();
+        totalScore.text = PlayerStats.GetTotalScore().ToString();
 
         if(PlayerStats.lives <= 0)
         {

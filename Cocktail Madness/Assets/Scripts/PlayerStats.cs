@@ -26,4 +26,9 @@ public class PlayerStats : MonoBehaviour
     }
 
 
+    public static int GetTotalScore()
+    {
+        return (perfectServings * 2 * 100) + (correctServings * 100);
+    }
+
 }

@@ -32,6 +32,9 @@ public class Shaker : MonoBehaviour
     public float distance;
 
     public event Action resetShaker;
+    public event Action trashShaker;
+    public event Action startShaking;
+    public event Action stopShaking;
     public event Action<BoxCollider2D> serveCustomer;
 
     
@@ -61,6 +64,7 @@ public class Shaker : MonoBehaviour
         
         if (isShaking && !wasShaking)
         {
+            startShaking();
             audioSource.Play();
             currentShakeTime += Time.deltaTime;
             wasShaking = isShaking;
@@ -72,6 +76,7 @@ public class Shaker : MonoBehaviour
             currentShakeTime += Time.deltaTime;
         }else if (!isShaking && wasShaking && Time.time - shakeCorrectionTime > shakeSessionTime)
         {
+            stopShaking();
             audioSource.Stop();
             wasShaking = isShaking;
             
@@ -87,6 +92,7 @@ public class Shaker : MonoBehaviour
             {
                 if (c.gameObject.tag == "Trash")
                 {
+                    trashShaker();
                     ResetShaker();
                     return;
                 }
@@ -134,14 +140,10 @@ public class Shaker : MonoBehaviour
 
     #region events
 
-
-
-
     public void UseIngredient(GameObject ingredient)
     {
         currentIngredients.Add(ingredient);
         ingredient.GetComponent<Ingredient>().PlaySound();
-        //Debug.Log("Used ingredient : " + ingredient.name);
     }
 
     
