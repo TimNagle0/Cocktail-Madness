@@ -26,6 +26,7 @@ int minDifference = 4000;
 int lastTotal[3] = {0,0,0};
 int newTotal[3] = {0,0,0};
 bool isShaking = false;
+bool wasShaking = false;
 
 
 
@@ -42,6 +43,10 @@ bool isShaking = false;
 
 // Insert Firebase project API Key
 #define API_KEY "AIzaSyClLkLYcoDL4ffQ6HDXMn-4XtyRhIww28A"
+
+#define USER_EMAIL "tue.cocktailmadness@gmail.com"
+#define USER_PASSWORD "t40B3864EK"
+
 
 // Insert RTDB URLefine the RTDB URL */
 #define DATABASE_URL "https://biomarker-cocktailshaker-default-rtdb.europe-west1.firebasedatabase.app/" 
@@ -78,31 +83,32 @@ void setup(){
   /* Assign the api key (required) */
   config.api_key = API_KEY;
 
+  auth.user.email = USER_EMAIL;
+  auth.user.password = USER_PASSWORD;
   /* Assign the RTDB URL (required) */
   config.database_url = DATABASE_URL;
 
-  /* Sign up */
-  if (Firebase.signUp(&config, &auth, "", "")){
-    Serial.println("ok");
-    signupOK = true;
-  }
-  else{
-    Serial.printf("%s\n", config.signer.signupError.message.c_str());
-  }
-
   /* Assign the callback function for the long running token generation task */
+  String base_path = "/UsersData/";
+
+    /* Assign the callback function for the long running token generation task */
   config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
-  
+
+  /** Assign the maximum retry of token generation */
+  config.max_token_generation_retry = 5;
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 }
 
 void loop(){
-  GetAccelData();
+  String path = "/UsersData/";
+  path += auth.token.uid.c_str(); //<- user uid of current user that sign in with Emal/Password
+  path += "/ShakerState/shakeTime";
+  GetAccelData(path);
   delay(150);
 }
 
-void GetAccelData(){
+void GetAccelData(String path){
   int regAddress = 0x32;    //first axis-acceleration-data register on the ADXL345
   int x, y, z;
   
@@ -119,31 +125,18 @@ void GetAccelData(){
     Serial.println("Shaking detected");
     if(!isShaking){
       isShaking = true;
-      if (Firebase.ready() && signupOK){
-        if (Firebase.RTDB.setBool(&fbdo, "stateShaker/shakeTime", true)){
-          Serial.println("success");
-        }else{
-          Serial.println("fail");
-        }
-      }
-      
-    }
   }else{
     if(isShaking){
       isShaking = false;
-      if (Firebase.ready() && signupOK){
-        if (Firebase.RTDB.setBool(&fbdo, "stateShaker/shakeTime", false)){
-          Serial.println("success");
-        }else{
-          Serial.println("fail");
-        }
-      }
-      
     }
   }
   lastTotal[0] = x;
   lastTotal[1] = y;
   lastTotal[2] = z;
+  if(isShaking != wasShaking){
+    Serial.printf("Set bool... %s\n", Firebase.RTDB.setBool(&fbdo, path.c_str(), isShaking) ? "ok" : fbdo.errorReason().c_str());
+  }
+  wasShaking = isShaking;
   
   
   

@@ -140,7 +140,7 @@ public class OrderManager : MonoBehaviour
         
         shaker.ResetShaker();
         customerManager.RemoveCustomer(customer);
-        audioSource.PlayOneShot(correctOrderSound);
+        uiManager.GainPoint();
         
         if (isPerfect)
         {

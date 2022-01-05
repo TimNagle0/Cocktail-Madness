@@ -57,7 +57,7 @@ public class ExperimentManager : MonoBehaviour
         orderManager.perfectOrder += PerfectServe;
         orderManager.correctOrder += CorrectServe;
         orderManager.shakeTime += ShakeTime;
-        levelManager.finishTutorial += PrepareSummaryDataPoint;
+        //levelManager.finishTutorial += PrepareSummaryDataPoint;
     }
 
     private float GetInterval(ref float timeSinceLast)
@@ -134,6 +134,7 @@ public class ExperimentManager : MonoBehaviour
 
     private void Start()
     {
+        startTimeExperiment = System.DateTime.Now.ToString();
         SubscribeToEvents();   
     }
     #region Data Classes
@@ -185,7 +186,19 @@ public class ExperimentManager : MonoBehaviour
         SendFilesContinuous(dataPoint);
     }
 
-    public void PrepareSummaryDataPoint(bool isLast)
+    public void PrepareSummaryMainMenu()
+    {
+        PrepareSummaryDataPoint(0, false);
+    }
+    public void PrepareSummaryNext()
+    {
+        PrepareSummaryDataPoint(SceneManager.GetActiveScene().buildIndex + 1, false);
+    }
+    public void PrepareSummaryEnd()
+    {
+        PrepareSummaryDataPoint(0, true);
+    }
+    public void PrepareSummaryDataPoint(int level, bool isLast)
     {
         SummaryData dataPoint = new SummaryData(startTimeExperiment, currentLevel);
         dataPoint.totalTime = (int)Time.timeSinceLevelLoad;
@@ -195,32 +208,23 @@ public class ExperimentManager : MonoBehaviour
         dataPoint.incorrectServes = PlayerStats.incorrectServings;
         dataPoint.totalScore = PlayerStats.GetTotalScore();
 
-        SendFilesSummary(dataPoint, isLast);
+        SendFilesSummary(dataPoint, level, isLast);
     }
 
     public void SendFilesContinuous(ContinuousData dataPoint)
     {
         WWWForm form;
         form = AddFieldsContinuous(dataPoint);
-        StartCoroutine(SendFiles(form, false, false));
+        StartCoroutine(SendFiles(form, false,0, false));
 
     }
 
-    public void SendFilesSummary(SummaryData dataPoint, bool isLast)
+    public void SendFilesSummary(SummaryData dataPoint,int level, bool isLast)
     {
 
         WWWForm form;
         form = AddFieldsSummary(dataPoint);
-        StartCoroutine(SendFiles(form, true, isLast));
-
-        if (isLast)
-        {
-            Invoke("StopExperiment", 0.5f);
-        }
-        else
-        {
-            Invoke("LoadNextScene", 0.5f);
-        }
+        StartCoroutine(SendFiles(form, true, level, isLast));
 
     }
     private WWWForm AddFieldsContinuous(ContinuousData data)
@@ -254,7 +258,7 @@ public class ExperimentManager : MonoBehaviour
 
     #endregion
 
-    public IEnumerator SendFiles(WWWForm form, bool loadNext, bool isFinalForm)
+    public IEnumerator SendFiles(WWWForm form, bool loadNext, int level, bool isFinalForm)
     {
         // Instead of the URL we can use # to get to the same route as the game was delivered on
         // Alternatively specify the URL of the server with port and route
@@ -271,22 +275,25 @@ public class ExperimentManager : MonoBehaviour
         UWRPost.Dispose();
         if (isFinalForm)
         {
-            Invoke("StopExperiment", 1f);
+            Debug.Log("Calling redirect");
+            StopExperiment();
         }
         else if (loadNext)
         {
-            Invoke("LoadNextScene", 0.5f);
+            LoadNextScene(level);
         }
     }
 
     public void StopExperiment()
     {
+        Debug.Log("Stopexperiment");
         RedirectBOF();
+        Debug.Log("Finish");
     }
 
-    public void LoadNextScene()
+    public void LoadNextScene(int level)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(level);
     }
 
 

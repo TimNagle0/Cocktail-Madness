@@ -50,14 +50,18 @@ public class FirebaseHandler : MonoBehaviour
     public Shaker shaker;
     public OrderManager orderManager;
 
+    private string uid = "5DG2x5IYTBS6uvZvbUKSUkDUbEO2";
+    private string shakerPath;
     //Setup all the listeners for changes in the firebase database
     // Also reset any existing data and set up a listener for the shaker reset event
     void Start()
     {
+        shakerPath = "UsersData/" + uid + "/ShakerState";
         shaker.resetShaker += ResetAll;
         isStartup = true;
         ResetAll();
-        ListenForValueChanged("stateShaker", gameObject.name, "onSuccess", "onFailure");
+        //ListenForValueChanged(shakerPath, gameObject.name, "onSuccess", "onFailure");
+        //ListenForValueChanged("stateShaker", gameObject.name, "onSuccess", "onFailure");
         //ListenForValueChanged("Ingredients", gameObject.name, "CheckIngredients", "onFailure");
         //ListenForValueChanged("ServingSpots", gameObject.name, "ServeCocktail", "onFailure");
         //ListenForValueChanged("stateShaker/shakeTime", gameObject.name, "onSuccess", "onFailure");
@@ -70,6 +74,7 @@ public class FirebaseHandler : MonoBehaviour
     }
     public void ResetShakeTime()
     {
+        PostJSON(shakerPath + "/shakeTime", "false", "PostResult", "onFailure");
         PostJSON("stateShaker/shakeTime", "false", "PostResult", "onFailure");
     }
     public void ResetIngredients()

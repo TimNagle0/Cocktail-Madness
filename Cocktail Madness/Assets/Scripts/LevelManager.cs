@@ -32,26 +32,34 @@ public class LevelManager : MonoBehaviour
     public UIManager uiManager;
     public CustomerManager customerManager;
 
+
+    [Header("Background music clips")]
+    [SerializeField] private List<AudioClip> clips = new List<AudioClip>();
+    [SerializeField] private float hurryTime;
+    private bool isPlayingHurry = false;
+    private AudioSource audioSource;
+
     private float startTime = 0;
     // Start is called before the first frame update
     void Start()
     {
         uiManager.EnableLevelTimer(true);
         startTime = Time.time;
-        
+        audioSource = GetComponentInChildren<AudioSource>();
         customerManager.SetCustomerSettings(customerOrderTime, customerOrderVariance);
         if (isTutorial)
         {
-            
+            audioSource.clip = clips[0];
             uiManager.EnableLevelTimer(false);
             customerManager.SpawnTutorialCustomer();
         }
         else
         {
-            
+            audioSource.clip = clips[1];
             uiManager.SetLevelTimer(totalTime);
             customerManager.SpawnCustomers(customerInterval);
         }
+        audioSource.Play();
     }
 
     // Update is called once per frame
@@ -59,7 +67,11 @@ public class LevelManager : MonoBehaviour
     {
         if (Time.time - startTime > totalTime)
         {
-            uiManager.gameOver.ShowGameOverScreen(); 
+            if (!uiManager.gameOver.gameObject.activeSelf)
+            {
+                uiManager.gameOver.ShowGameOverScreen();
+            }
+            
         }
 
         if(PlayerStats.GetTotalServings() > difficultyInterval)
@@ -75,13 +87,21 @@ public class LevelManager : MonoBehaviour
             if (!isFinished)
             {
                 isFinished = true;
-                finishTutorial(false);
+                //finishTutorial(false);
+                uiManager.ShowEndTutorial();
             }
-            
-            //LoadNextLevel();
+        }
+        if (isTutorial)
+            return;
+
+        if (Time.timeSinceLevelLoad - hurryTime > startTime && !isPlayingHurry)
+        {
+            audioSource.clip = clips[2];
+            isPlayingHurry = true;
+            audioSource.Play();
         }
 
-        
+
     }
     
 

@@ -6,7 +6,7 @@
     <title>Unity WebGL Player | unity_project</title>
 </head>
 <body style="text-align: center">
-<canvas id="unity-canvas" width=960 height=540 style="width: 960px; height: 540px; background: #231F20"></canvas>
+<canvas id="unity-canvas" width=1600 height=900 style="width: 1600px; height: 900; background: #231F20"></canvas>
 
 
 <script src="Cocktail_Madness/Cocktail_Madness.loader.js"></script>
@@ -30,7 +30,7 @@
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-    }).then((instance) => {gameInstance = instance });
+    }).then((unityInstance) => {window.unityInstance = unityInstance });
     // Note that builds compressed with Brotli require HTTPS. This example uses gzip.
 </script>
 

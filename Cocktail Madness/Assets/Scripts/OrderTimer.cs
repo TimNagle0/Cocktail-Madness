@@ -28,6 +28,7 @@ public class OrderTimer : MonoBehaviour
         orderTime = time;
         startTime = Time.time;
         isStarted = true;
+        StartCoroutine(OrderBubble(orderTime));
 
     }
 
@@ -55,6 +56,19 @@ public class OrderTimer : MonoBehaviour
 
     }
 
+    IEnumerator OrderBubble(float totalTime)
+    {
+        float interval = totalTime / 10;
+        int orderSprite = 0;
+        while (orderSprite < orderBubbleStates.Count)
+        {
+            orderBubble.sprite = orderBubbleStates[orderSprite];
+            orderSprite++;
+            yield return new WaitForSeconds(interval);
+        }
+        
+    }
+
     private void PlayHurryAnimation()
     {
         animator.SetBool("isLate", true);
@@ -64,6 +78,6 @@ public class OrderTimer : MonoBehaviour
     private void UpdateOrderSprites(int sprite)
     {
         monsterRenderer.SetMonsterStage(sprite + 1);
-        orderBubble.sprite = orderBubbleStates[sprite];
+        //orderBubble.sprite = orderBubbleStates[sprite];
     }
 }

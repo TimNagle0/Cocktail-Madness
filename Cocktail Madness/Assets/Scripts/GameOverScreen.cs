@@ -16,16 +16,22 @@ public class GameOverScreen : MonoBehaviour
     public Sprite gameOver;
     public Sprite timeOver;
 
+
+    [Header("Audio")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip gameOverSound;
+    [SerializeField] private AudioClip timeOverSound;
     public void ShowGameOverScreen()
     {
         PlayerStats.timePlayed = Time.time;
+        audioSource = GetComponentInChildren<AudioSource>();
         
         int perfect = PlayerStats.perfectServings;
         int correct = PlayerStats.correctServings;
         int incorrect = PlayerStats.incorrectServings;
 
         PauseControl.PauseGame();
-
+        gameObject.SetActive(true);
         totalServings.text = string.Format("{0} servings", PlayerStats.GetTotalServings());
         perfectServings.text = perfect.ToString();
         correctServings.text = correct.ToString();
@@ -35,14 +41,23 @@ public class GameOverScreen : MonoBehaviour
         if(PlayerStats.lives <= 0)
         {
             gameOverText.sprite = gameOver;
+            StartCoroutine(playSound(gameOverSound));
         }
         else
         {
             gameOverText.sprite = timeOver;
+            StartCoroutine(playSound(timeOverSound));
         }
 
-        gameObject.SetActive(true);
+        
     }
+
+    IEnumerator playSound(AudioClip clip)
+    {
+        yield return new WaitUntil(() => audioSource.isActiveAndEnabled);
+        audioSource.PlayOneShot(clip);
+    }
+
 
     public void RedirectBof()
     {
