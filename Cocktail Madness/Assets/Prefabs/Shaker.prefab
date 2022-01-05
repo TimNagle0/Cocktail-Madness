@@ -114,12 +114,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86beaa015a5d2624db2fcc7360475213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeKey: 32
+  trashKey: 116
   IngredientList: {fileID: 0}
   currentIngredients: []
   currentRecipe: {fileID: 0}
   currentShakeTime: 0
   shakerState: 0
   isShaking: 0
+  shakeTimeOutTime: 0.5
+  shakeTimeMultiplier: 40
   minMoveDistance: 0.1
   distance: 0
 --- !u!114 &4780697059595947972
