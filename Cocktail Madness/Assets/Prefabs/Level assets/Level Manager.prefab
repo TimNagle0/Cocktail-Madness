@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa837d6ef662cb49b445cb1b89e5d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loseLife: {fileID: 0}
+  gainPoint: {fileID: 0}
 --- !u!82 &934456385
 AudioSource:
   m_ObjectHideFlags: 0
@@ -56,7 +58,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.138
+  m_Volume: 0.03
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -192,10 +194,11 @@ MonoBehaviour:
   intervalMultiplier: 0
   difficultyInterval: 0
   isTutorial: 1
+  minOrderTime: 5
+  gameTimeTreshold: 300
   uiManager: {fileID: 0}
   customerManager: {fileID: 0}
+  HotkeyOverlay: {fileID: 0}
   clips:
-  - {fileID: 8300000, guid: 191ff2f9f8361b44e9fcca498cc00525, type: 3}
-  - {fileID: 8300000, guid: ba3a4991eada1b74290aad43c0e0456e, type: 3}
-  - {fileID: 8300000, guid: 19493f8f5a25ab54bb4f7633b9c1ee96, type: 3}
+  - {fileID: 8300000, guid: c8a079fd4d92ed9439bb1640279b56cd, type: 3}
   hurryTime: 270

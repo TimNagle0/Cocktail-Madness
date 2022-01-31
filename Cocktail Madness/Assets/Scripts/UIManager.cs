@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public ShakeTimeBar shakeTimeBar;
+    public AddIngredientBar addIngredientBar;
     public IngredientTracker ingredientTracker; 
     public Shaker shaker;
     public OrderFeedbackText orderFeedbackText;
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
         gameOver.gameObject.SetActive(false);
         UpdateServed(0);
         shaker.resetShaker += ClearIngredientTracker;
+        shaker.addIngredient += PlayAddIngredient;
     }
 
     // Update is called once per frame
@@ -61,6 +63,8 @@ public class UIManager : MonoBehaviour
 
     public void GainPoint()
     {
+        if (uiAudio == null)
+            return;
         uiAudio.PlayGainPoint();
     }
 
@@ -74,6 +78,10 @@ public class UIManager : MonoBehaviour
         PerfectServed.text = served.ToString();
     }
 
+    public void PlayAddIngredient()
+    {
+        addIngredientBar.StartSlider(1);
+    }
 
 
     public void UpdateServingMessage(bool isCorrect, string scenario)

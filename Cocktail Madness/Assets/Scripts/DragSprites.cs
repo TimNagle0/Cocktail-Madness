@@ -7,17 +7,11 @@ public class DragSprites : MonoBehaviour
     private Vector3 startPosition;
     private Collider2D col;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         col = GetComponent<Collider2D>();
         startPosition = transform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnMouseDrag()
@@ -37,6 +31,7 @@ public class DragSprites : MonoBehaviour
         }
         
     }
+
     private void ResetIngredientSprite()
     {
         transform.position = startPosition;

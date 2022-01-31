@@ -5,6 +5,9 @@ using System;
 
 public class Shaker : MonoBehaviour
 {
+    [SerializeField] public KeyCode shakeKey;
+    [SerializeField] public KeyCode trashKey;
+
     public IngredientList IngredientList;
     public List<GameObject> currentIngredients = new List<GameObject>();
     public Recipe currentRecipe;
@@ -25,7 +28,10 @@ public class Shaker : MonoBehaviour
     public ShakerState shakerState = ShakerState.preparing;
     public bool isShaking;
     private bool wasShaking = false;
-    private float shakeCorrectionTime = 0.1f;
+
+    //The time interval that the player has between pressing space
+    [SerializeField] private float shakeTimeOutTime = 1f;
+    [SerializeField] private float shakeTimeMultiplier = 50f;
     private float shakeSessionTime = 0;
     public float minMoveDistance;
 
@@ -35,11 +41,10 @@ public class Shaker : MonoBehaviour
     public event Action trashShaker;
     public event Action startShaking;
     public event Action stopShaking;
+    public event Action addIngredient; // for ui
     public event Action<BoxCollider2D> serveCustomer;
 
     
-
-    // Start is called before the first frame update
     void Start()
     {
         col = GetComponent<Collider2D>();
@@ -54,27 +59,34 @@ public class Shaker : MonoBehaviour
         IngredientList.useIngredient += UseIngredient;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if(shakerState == ShakerState.canShake)
+        isShaking = Input.GetKeyDown(shakeKey);
+        if (Input.GetKeyDown(trashKey))
         {
-            GetPositionDifference();
+            trashShaker();
+            ResetShaker();
         }
-        
+
+        // Checks if the player was already shaking and if they continue to do so within the allowed interval
+        // Starts with a set amount and adds time to the shakebar based on how fast the player presses the hotkey
         if (isShaking && !wasShaking)
         {
             startShaking();
             audioSource.Play();
-            currentShakeTime += Time.deltaTime;
+            currentShakeTime += 0.25f;
             wasShaking = isShaking;
             shakeSessionTime = Time.time;
         }
         else if(isShaking)
         {
+            float time = Mathf.Clamp01(1 / ((Time.time-shakeSessionTime)*shakeTimeMultiplier));
+            currentShakeTime += time;
             shakeSessionTime = Time.time;
-            currentShakeTime += Time.deltaTime;
-        }else if (!isShaking && wasShaking && Time.time - shakeCorrectionTime > shakeSessionTime)
+            
+        }
+        else if (!isShaking && wasShaking && Time.time - shakeTimeOutTime > shakeSessionTime || Input.GetKeyDown(trashKey))
         {
             stopShaking();
             audioSource.Stop();
@@ -83,6 +95,7 @@ public class Shaker : MonoBehaviour
         }
     }
 
+    //If the shaker is moved, check if they are trashing or serving it, otherwise it will snap back to the start
     private void OnMouseUp()
     {
         Collider2D[] overlap = Physics2D.OverlapAreaAll(col.bounds.min, col.bounds.max);
@@ -96,7 +109,7 @@ public class Shaker : MonoBehaviour
                     ResetShaker();
                     return;
                 }
-                if(c.gameObject.tag == "Serving location" && shakerState == ShakerState.serving)
+                if(c.gameObject.tag == "Serving location")
                 {
                     serveCustomer(c.GetComponent<BoxCollider2D>());
                 }
@@ -113,6 +126,7 @@ public class Shaker : MonoBehaviour
         shakerState = ShakerState.preparing;
         return currentRecipe;
     }
+
     public void EnableShakeTimer()
     {
         shakerState = ShakerState.canShake;
@@ -143,6 +157,7 @@ public class Shaker : MonoBehaviour
     public void UseIngredient(GameObject ingredient)
     {
         currentIngredients.Add(ingredient);
+        addIngredient();
         ingredient.GetComponent<Ingredient>().PlaySound();
     }
 
