@@ -23,6 +23,11 @@ public class LevelManager : MonoBehaviour
     public float difficultyInterval;
     public bool isTutorial;
 
+    [Header("Adjust these value to tweak the end game difficulty")]
+    [SerializeField] private float minOrderTime = 5;
+    [SerializeField] private float gameTimeTreshold =0;
+    private float difficultyStep = 10;
+
 
     public event Action<bool> finishTutorial;
     private bool isFinished = false;
@@ -31,6 +36,7 @@ public class LevelManager : MonoBehaviour
     [Header("Needed components")]
     public UIManager uiManager;
     public CustomerManager customerManager;
+    [SerializeField] GameObject HotkeyOverlay;
 
 
     [Header("Background music clips")]
@@ -47,15 +53,14 @@ public class LevelManager : MonoBehaviour
         startTime = Time.time;
         audioSource = GetComponentInChildren<AudioSource>();
         customerManager.SetCustomerSettings(customerOrderTime, customerOrderVariance);
+        audioSource.clip = clips[0];
         if (isTutorial)
-        {
-            audioSource.clip = clips[0];
+        {  
             uiManager.EnableLevelTimer(false);
             customerManager.SpawnTutorialCustomer();
         }
         else
         {
-            audioSource.clip = clips[1];
             uiManager.SetLevelTimer(totalTime);
             customerManager.SpawnCustomers(customerInterval);
         }
@@ -65,11 +70,16 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time - startTime > totalTime)
+        if(Time.time > gameTimeTreshold && customerOrderTime > minOrderTime)
+        {
+            customerOrderTime = Mathf.Lerp(customerOrderTime, minOrderTime, Time.deltaTime * Time.time / 2500); //0.04%
+        }
+        if (Time.time - startTime > totalTime && !isTutorial)
         {
             if (!uiManager.gameOver.gameObject.activeSelf)
             {
                 uiManager.gameOver.ShowGameOverScreen();
+                HotkeyOverlay.SetActive(false);
             }
             
         }
@@ -89,19 +99,11 @@ public class LevelManager : MonoBehaviour
                 isFinished = true;
                 //finishTutorial(false);
                 uiManager.ShowEndTutorial();
+                HotkeyOverlay.SetActive(false);
             }
         }
         if (isTutorial)
             return;
-
-        if (Time.timeSinceLevelLoad - hurryTime > startTime && !isPlayingHurry)
-        {
-            audioSource.clip = clips[2];
-            isPlayingHurry = true;
-            audioSource.Play();
-        }
-
-
     }
     
 

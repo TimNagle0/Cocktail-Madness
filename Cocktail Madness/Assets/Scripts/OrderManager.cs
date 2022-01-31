@@ -11,6 +11,11 @@ public class OrderManager : MonoBehaviour
     public Shaker shaker;
     private AudioSource audioSource;
 
+    private KeyCode servingSpot1 = KeyCode.Alpha1;
+    private KeyCode servingSpot2 = KeyCode.Alpha2;
+    private KeyCode servingSpot3 = KeyCode.Alpha3;
+    private KeyCode servingSpot4 = KeyCode.Alpha4;
+
     [SerializeField] private AudioClip correctOrderSound;
     [SerializeField] private AudioClip incorrectOrderSound;
 
@@ -30,6 +35,10 @@ public class OrderManager : MonoBehaviour
     public void ServeOrderLocation(BoxCollider2D location)
     {
         CompareOrders(customerManager.servingLocations.IndexOf(location));
+    }
+    public void ServeOrderLocation(int location)
+    {
+        CompareOrders(location);
     }
     public void ServeOrder()
     {
@@ -160,6 +169,22 @@ public class OrderManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(servingSpot1))
+        {
+            CompareOrders(0);
+        }
+        if (Input.GetKeyDown(servingSpot2))
+        {
+            CompareOrders(1);
+        }
+        if (Input.GetKeyDown(servingSpot3))
+        {
+            CompareOrders(2);
+        }
+        if (Input.GetKeyDown(servingSpot4))
+        {
+            CompareOrders(3);
+        }
         if (Input.GetKeyDown(KeyCode.Return))
         {
             CompareOrders();

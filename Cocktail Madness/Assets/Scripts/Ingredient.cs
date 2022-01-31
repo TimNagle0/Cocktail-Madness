@@ -24,8 +24,9 @@ public class Ingredient : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(hotkey))
+        if (Input.GetKeyDown(hotkey) && !PlayerStats.isAddingIngredient)
         {
+            PlayerStats.AddIngredient();
             OnUse(gameObject);
         }
     }
@@ -45,7 +46,7 @@ public class Ingredient : MonoBehaviour
             {
                 if(c.gameObject.name == "Shaker")
                 {
-                    OnUse(gameObject);
+                    //OnUse(gameObject);
                     return;
                 }
             }

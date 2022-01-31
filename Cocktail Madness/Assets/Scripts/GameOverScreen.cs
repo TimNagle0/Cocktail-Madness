@@ -21,6 +21,7 @@ public class GameOverScreen : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip gameOverSound;
     [SerializeField] private AudioClip timeOverSound;
+    [SerializeField] private GameObject playAgainButton;
     public void ShowGameOverScreen()
     {
         PlayerStats.timePlayed = Time.time;
@@ -47,6 +48,10 @@ public class GameOverScreen : MonoBehaviour
         {
             gameOverText.sprite = timeOver;
             StartCoroutine(playSound(timeOverSound));
+        }
+        if(Time.time > 0)
+        {
+            playAgainButton.SetActive(false);
         }
 
         

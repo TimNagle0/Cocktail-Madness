@@ -41,6 +41,7 @@ public class Shaker : MonoBehaviour
     public event Action trashShaker;
     public event Action startShaking;
     public event Action stopShaking;
+    public event Action addIngredient; // for ui
     public event Action<BoxCollider2D> serveCustomer;
 
     
@@ -156,6 +157,7 @@ public class Shaker : MonoBehaviour
     public void UseIngredient(GameObject ingredient)
     {
         currentIngredients.Add(ingredient);
+        addIngredient();
         ingredient.GetComponent<Ingredient>().PlaySound();
     }
 

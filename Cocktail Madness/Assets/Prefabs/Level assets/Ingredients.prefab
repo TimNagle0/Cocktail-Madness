@@ -85,6 +85,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a73c9b809d85d6541b051f4c0fbdd45a, type: 3}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 114
+      objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -206,6 +210,10 @@ PrefabInstance:
     - target: {fileID: 2924615655064322489, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 119
       objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
@@ -329,6 +337,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -423,6 +435,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 8d257f8548eeddb4196e7293a7afe55f, type: 3}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 101
+      objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -545,6 +561,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 115
+      objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -658,6 +678,10 @@ PrefabInstance:
     - target: {fileID: 2924615655064322489, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 113
       objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
@@ -780,6 +804,10 @@ PrefabInstance:
     - target: {fileID: 2924615655064322489, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255151880484871960, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
+      propertyPath: hotkey
+      value: 97
       objectReference: {fileID: 0}
     - target: {fileID: 4401489362314859992, guid: 4bcfc9eb4d2605146a11a7ec089d0233, type: 3}
       propertyPath: m_audioClip
