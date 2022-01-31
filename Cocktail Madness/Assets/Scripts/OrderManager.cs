@@ -107,14 +107,21 @@ public class OrderManager : MonoBehaviour
         {
             Debug.Log("shaketime");
             uiManager.UpdateServingMessage(false, "shaketime");
-            FailCustomer(null);
+            if (!customer.GetComponent<CustomerBehaviour>().isTutorial)
+            {
+                FailCustomer(null);
+            }
+            
 
         }
         else
         {
             Debug.Log("ingredients");
             uiManager.UpdateServingMessage(false, "ingredients");
-            FailCustomer(null);
+            if (!customer.GetComponent<CustomerBehaviour>().isTutorial)
+            {
+                FailCustomer(null);
+            }
         }
     }
     #endregion

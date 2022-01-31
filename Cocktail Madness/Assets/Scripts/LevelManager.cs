@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Adjust these value to tweak the end game difficulty")]
     [SerializeField] private float minOrderTime = 5;
-    [SerializeField] private float gameTimeTreshold =0;
+    [SerializeField] private float gameTimeTreshold =300;
     private float difficultyStep = 10;
 
 

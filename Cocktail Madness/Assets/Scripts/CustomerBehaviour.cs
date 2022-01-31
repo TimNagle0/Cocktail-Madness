@@ -24,7 +24,7 @@ public class CustomerBehaviour : MonoBehaviour
     private float perfectTime;
     private float startTime = Mathf.Infinity;
     private bool isMoving = false;
-    private bool isTutorial = false;
+    public bool isTutorial = false;
 
     private Transform orderLocation;
 
@@ -83,9 +83,7 @@ public class CustomerBehaviour : MonoBehaviour
 
     public bool isPerfectOrder()
     {
-        Debug.Log("Perfect time = " + perfectTime);
         bool isPerfect = Time.time - startTime < perfectTime;
-        Debug.Log("is perfect order : " + isPerfect);
         return isPerfect;
     }
 

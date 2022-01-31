@@ -1886,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8902362295163819074, guid: c6ef4b652c09b2d469b118237fb33295, type: 3}
       propertyPath: gameTimeTreshold
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8902362295163819074, guid: c6ef4b652c09b2d469b118237fb33295, type: 3}
       propertyPath: customerOrderTime

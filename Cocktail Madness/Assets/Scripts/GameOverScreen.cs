@@ -49,7 +49,7 @@ public class GameOverScreen : MonoBehaviour
             gameOverText.sprite = timeOver;
             StartCoroutine(playSound(timeOverSound));
         }
-        if(Time.time > 0)
+        if(Time.time > 300)
         {
             playAgainButton.SetActive(false);
         }
